@@ -44,15 +44,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: EndLight
       objectReference: {fileID: 0}
+    - target: {fileID: 4342733777483272865, guid: 413441c0a37fa6e439e0e2ea2e1c9d01,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 17.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4342733777483272865, guid: 413441c0a37fa6e439e0e2ea2e1c9d01,
+        type: 3}
+      propertyPath: m_Range
+      value: 20.46
+      objectReference: {fileID: 0}
     - target: {fileID: 4342733777483272866, guid: 413441c0a37fa6e439e0e2ea2e1c9d01,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -3.3
       objectReference: {fileID: 0}
     - target: {fileID: 4342733777483272866, guid: 413441c0a37fa6e439e0e2ea2e1c9d01,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.7
+      value: 17.2
       objectReference: {fileID: 0}
     - target: {fileID: 4342733777483272866, guid: 413441c0a37fa6e439e0e2ea2e1c9d01,
         type: 3}
