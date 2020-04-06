@@ -83,6 +83,11 @@ public class Rocket : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    private void LoadFirstLevel()
+    {
+        SceneManager.LoadScene(1);
+    }
+
     // Update is called once per frame
     void Update()
     {
