@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 public class Rocket : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class Rocket : MonoBehaviour
     enum State { Alive, Dying, Transcending };
     State state = State.Alive;
 
+    bool collissionsDisabled = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,10 +31,47 @@ public class Rocket : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+        if (state == State.Alive)
+        {
+            rigidBody.angularVelocity = Vector3.zero;
+            RespondToThrustInput();
+            RespondToRotateInput();
+        }
+
+        if (Debug.isDebugBuild)
+        {
+            RespondToDebugKeys();
+        }
+    }
+
+    private void RespondToDebugKeys()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            LoadNextLevel();
+        }
+        else if (Input.GetKeyDown(KeyCode.RightControl))
+        {
+            LoadPreviousLevel();
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            collissionsDisabled = !collissionsDisabled;
+        }
+    }
+
+    private void LoadPreviousLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        successParticles.Stop();
+    }
+
     void OnCollisionEnter(Collision collision)
     {
-        if (state != State.Alive)
-            return;
+        if (state != State.Alive || collissionsDisabled) return;
 
         switch (collision.gameObject.tag)
         {
@@ -87,17 +127,6 @@ public class Rocket : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (state == State.Alive)
-        {
-            RespondToThrustInput();
-            RespondToRotateInput();
-        }
-    }
-
     private void RespondToThrustInput()
     {
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Space))
@@ -140,7 +169,6 @@ public class Rocket : MonoBehaviour
     private void RespondToRotateInput()
     {
         float rotationThisFrame = rcsThrust * Time.deltaTime;
-
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             transform.Rotate(Vector3.forward * rotationThisFrame);
